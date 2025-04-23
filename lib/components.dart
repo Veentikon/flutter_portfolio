@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TabsWeb extends StatefulWidget {
@@ -35,7 +34,7 @@ class _TabsWebState extends State<TabsWeb> {
           fontSize: 25.0,
           color: Colors.transparent,
           decoration: TextDecoration.underline,
-          decorationThickness: 2,
+          decorationThickness: 2.0,
           decorationColor: Colors.tealAccent,
         ): 
         GoogleFonts.oswald(color: Colors.black, fontSize:23.0 ),
@@ -98,28 +97,71 @@ class SkillBox extends StatelessWidget {
   }
 }
 
-class WorksCard extends StatelessWidget {
+class WorksCard extends StatefulWidget {
   final image;
   final description;
-  const WorksCard(this.image, this.description, {super.key});
+  final fit;
+  final reverse;
+
+  const WorksCard(
+    {
+      super.key,
+      required this.image,
+      required this.description,
+      this.fit,
+      this.reverse,
+    }
+  );
+
+  @override
+  State<WorksCard> createState() => _WorksCardState();
+}
+
+class _WorksCardState extends State<WorksCard> with SingleTickerProviderStateMixin {
+  late AnimationController _controller = AnimationController(vsync: this,duration: const Duration(seconds: 4),)..repeat(reverse: true);
+  // vsync prevents animations running in the background when invisible
+  
+  late Animation<Offset> _animation=Tween(
+    begin: widget.reverse == true ? Offset(0, 0.08) : Offset.zero,
+    end: widget.reverse == true ? Offset.zero : Offset(0, 0.08),
+  ).animate(_controller);
+
+  late Animation<Offset> _animationRev=Tween(
+    begin: widget.reverse == true ? Offset(0.08, 0.0) : Offset.zero,
+    end: widget.reverse == true ? Offset.zero : Offset(0.08, 0.0),
+  ).animate(_controller);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 30,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      shadowColor: Colors.tealAccent,
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(image,height: 200, width: 200, fit: BoxFit.contain),
-            SizedBox(height: 10),
-            SansBold(text: description, size: 15),
-          ],
+    return SlideTransition(
+      position: _animation,
+      child: Card(
+        elevation: 30,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          side: BorderSide(color: Colors.tealAccent),
+        ),
+        shadowColor: Colors.tealAccent,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(
+                widget.image,height: 200.0, 
+                width: 200.0, 
+                fit: widget.fit == null? null : widget.fit,
+              ),
+              SizedBox(height: 10.0),
+              SansBold(text: widget.description, size: 15.0),
+            ],
+          ),
         ),
       ),
     );
@@ -131,7 +173,7 @@ class TextForm extends StatelessWidget {
   final width;
   final hintText;
   final maxLines;
-  
+
   const TextForm({
     super.key, 
     required this.heading, 
@@ -170,7 +212,7 @@ class TextForm extends StatelessWidget {
               ),
             ),
             hintText: hintText,
-            hintStyle: GoogleFonts.poppins(fontSize: 14),
+            hintStyle: GoogleFonts.poppins(fontSize: 14.0),
             ),
             // validator: (text) {
             //   if (RegExp("\\bvitalii\\b", caseSensitive: false).hasMatch(text.toString())){

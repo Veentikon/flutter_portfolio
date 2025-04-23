@@ -155,9 +155,9 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    WorksCard("webL.png", "Web development"),
-                    WorksCard("app.png", "App development"),
-                    WorksCard("firebase.png", "Back-end development"),
+                    WorksCard(image: "webL.png", description: "Web development",fit:BoxFit.contain,reverse:true),
+                    WorksCard(image: "app.png", description: "App development"),
+                    WorksCard(image: "firebase.png", description: "Back-end development",fit:BoxFit.contain,reverse:true),
                   ],
                 ),
               ],
@@ -205,10 +205,22 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                     ),
                   ],
                 ),
-                TextForm(heading: "Message", width: widthDevice/1.374, hintText: "Please enter your message", maxLines: 10,)
+                TextForm(heading: "Message", width: widthDevice/1.374, hintText: "Please enter your message", maxLines: 10,),
+                MaterialButton(
+                  elevation: 20.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  height: 60.0,
+                  minWidth: 100.0,
+                  color: Colors.teal,
+                  child: SansBold(text: "Submit", size: 20.0),
+                  onPressed: () {},
+                ),
               ],
             ),
           ),
+          SizedBox(height: 20.0),
         ],
       ),
     );
