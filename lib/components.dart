@@ -37,10 +37,41 @@ class _TabsWebState extends State<TabsWeb> {
           decorationThickness: 2.0,
           decorationColor: Colors.tealAccent,
         ): 
-        GoogleFonts.oswald(color: Colors.black, fontSize:23.0 ),
+        GoogleFonts.oswald(color: Colors.black, fontSize:20.0 ),
         child: Text(widget.title
         ),
       ),
+    );
+  }
+}
+
+class TabsMobile extends StatefulWidget {
+  final text;
+  final route;
+  const TabsMobile({super.key, required this.text, required this.route});
+
+  @override
+  State<TabsMobile> createState() => _TabsMobileState();
+}
+
+class _TabsMobileState extends State<TabsMobile> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      elevation: 20.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      color: Colors.black,
+      height: 50.0,
+      minWidth: 200.0,
+      child: Text(widget.text,
+        style: GoogleFonts.openSans(
+          fontSize: 20.0,
+          color: Colors.white,
+        )
+      ),
+      onPressed: () {},
     );
   }
 }
@@ -124,11 +155,6 @@ class _WorksCardState extends State<WorksCard> with SingleTickerProviderStateMix
   late Animation<Offset> _animation=Tween(
     begin: widget.reverse == true ? Offset(0, 0.08) : Offset.zero,
     end: widget.reverse == true ? Offset.zero : Offset(0, 0.08),
-  ).animate(_controller);
-
-  late Animation<Offset> _animationRev=Tween(
-    begin: widget.reverse == true ? Offset(0.08, 0.0) : Offset.zero,
-    end: widget.reverse == true ? Offset.zero : Offset(0.08, 0.0),
   ).animate(_controller);
 
   @override

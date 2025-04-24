@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/svg.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/components.dart';
+import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher_string.dart';
 
 class LandingPageWeb extends StatefulWidget {
   const LandingPageWeb({super.key});
@@ -10,12 +13,50 @@ class LandingPageWeb extends StatefulWidget {
 }
 
 class _LandingPageWebState extends State<LandingPageWeb> {
+  urlLauncher(String imgPath, String url) {
+    return IconButton(
+      onPressed: () async {
+        await launchUrl(Uri.parse(url));
+      }, 
+      icon: SvgPicture.asset(imgPath,
+        color: Colors.black, width: 35.0
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     var heightDevice=MediaQuery.of(context).size.height;
     var widthDevice=MediaQuery.of(context).size.width;
     return Scaffold(
-      drawer: Drawer(),
+      drawer: Drawer(
+        backgroundColor: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 72.0,
+              backgroundColor: Colors.tealAccent,
+              child: CircleAvatar(
+                radius: 70.0,
+                backgroundColor: Colors.white,
+                backgroundImage: AssetImage("assets/image.png"),
+              ),
+            ),
+            SizedBox(height: 15.0),
+            SansBold(text: "Vitalii Radzividlo", size: 30.0),
+            SizedBox(height: 15.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                urlLauncher("assets/instagram2.svg", "https://www.instagram.com/tomcruise/"),
+                urlLauncher("xlogo.svg", "https://www.twitter.com/tomcruise"),
+                urlLauncher("assets/github.svg", "https://www.github.com/Veentikon"),
+              ], // (Image.asset) Does not support svg images
+              // SVG images are not pixelated
+            ),
+          ],
+        ),
+      ),
       backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -102,7 +143,7 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                     child: CircleAvatar(
                       radius: 140.0,
                       backgroundColor: Colors.white,
-                      backgroundImage: AssetImage("image.png"),
+                      backgroundImage: AssetImage("assets/image.png"),
                     ),
                   ),
                 ),
@@ -117,7 +158,7 @@ class _LandingPageWebState extends State<LandingPageWeb> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset("web.jpg",height: heightDevice/1.7),
+                Image.asset("web.jpg",height: widthDevice/1.9),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -155,9 +196,10 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    WorksCard(image: "webL.png", description: "Web development",fit:BoxFit.contain,reverse:true),
-                    WorksCard(image: "app.png", description: "App development"),
-                    WorksCard(image: "firebase.png", description: "Back-end development",fit:BoxFit.contain,reverse:true),
+                    WorksCard(image: "assets/webL.png", description: "Web development",fit:BoxFit.contain,reverse:true),
+                    WorksCard(image: "assets/app.png", description: "App development"),
+                    WorksCard(image: "assets/firebase.png", description: "Back-end development",fit:BoxFit.contain,reverse:true),
+                    // WorksCard()
                   ],
                 ),
               ],
@@ -205,7 +247,7 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                     ),
                   ],
                 ),
-                TextForm(heading: "Message", width: widthDevice/1.374, hintText: "Please enter your message", maxLines: 10,),
+                TextForm(heading: "Message", width: widthDevice/1.5, hintText: "Please enter your message", maxLines: 10,),
                 MaterialButton(
                   elevation: 20.0,
                   shape: RoundedRectangleBorder(
