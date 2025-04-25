@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class TabsWeb extends StatefulWidget {
   final title;
-  const TabsWeb({super.key, required this.title});
+  final route;
+  const TabsWeb({super.key, required this.title, this.route});
 
   @override
   State<TabsWeb> createState() => _TabsWebState();
@@ -14,31 +15,36 @@ class _TabsWebState extends State<TabsWeb> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) {
-        setState(() {
-          isSelected = true;
-        });
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(widget.route);
       },
-      onExit: (_) {
-        setState(() {
-          isSelected = false;
-        });
-      },
-      child: AnimatedDefaultTextStyle(
-        duration: const Duration(milliseconds: 100),
-        curve: Curves.elasticIn,
-        style: isSelected?GoogleFonts.oswald(
-          shadows: [Shadow(color: Colors.black, offset: Offset(0, -6 ),
-          )],
-          fontSize: 25.0,
-          color: Colors.transparent,
-          decoration: TextDecoration.underline,
-          decorationThickness: 2.0,
-          decorationColor: Colors.tealAccent,
-        ): 
-        GoogleFonts.oswald(color: Colors.black, fontSize:20.0 ),
-        child: Text(widget.title
+      child: MouseRegion(
+        onEnter: (_) {
+          setState(() {
+            isSelected = true;
+          });
+        },
+        onExit: (_) {
+          setState(() {
+            isSelected = false;
+          });
+        },
+        child: AnimatedDefaultTextStyle(
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.elasticIn,
+          style: isSelected?GoogleFonts.oswald(
+            shadows: [Shadow(color: Colors.black, offset: Offset(0, -6 ),
+            )],
+            fontSize: 25.0,
+            color: Colors.transparent,
+            decoration: TextDecoration.underline,
+            decorationThickness: 2.0,
+            decorationColor: Colors.tealAccent,
+          ): 
+          GoogleFonts.oswald(color: Colors.black, fontSize:20.0 ),
+          child: Text(widget.title
+          ),
         ),
       ),
     );
@@ -71,7 +77,9 @@ class _TabsMobileState extends State<TabsMobile> {
           color: Colors.white,
         )
       ),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pushNamed(widget.route);
+      },
     );
   }
 }
@@ -128,33 +136,44 @@ class SkillBox extends StatelessWidget {
   }
 }
 
-class WorksCard extends StatefulWidget {
+class AnimatedCard extends StatefulWidget {
   final image;
   final description;
   final fit;
   final reverse;
+  final height;
+  final width;
+  final animateVertical;
 
-  const WorksCard(
+  const AnimatedCard(
     {
       super.key,
       required this.image,
       required this.description,
       this.fit,
       this.reverse,
+      this.height,
+      this.width,
+      this.animateVertical,
     }
   );
 
   @override
-  State<WorksCard> createState() => _WorksCardState();
+  State<AnimatedCard> createState() => _AnimatedCardState();
 }
 
-class _WorksCardState extends State<WorksCard> with SingleTickerProviderStateMixin {
+class _AnimatedCardState extends State<AnimatedCard> with SingleTickerProviderStateMixin {
   late AnimationController _controller = AnimationController(vsync: this,duration: const Duration(seconds: 4),)..repeat(reverse: true);
   // vsync prevents animations running in the background when invisible
   
-  late Animation<Offset> _animation=Tween(
+  late Animation<Offset> _verticalAnimation=Tween(
     begin: widget.reverse == true ? Offset(0, 0.08) : Offset.zero,
     end: widget.reverse == true ? Offset.zero : Offset(0, 0.08),
+  ).animate(_controller);
+
+  late Animation<Offset> _horizontalAnimation=Tween(
+    begin: widget.reverse == true ? Offset(0.08, 0.0) : Offset.zero,
+    end: widget.reverse == true ? Offset.zero : Offset(0.08, 0.0),
   ).animate(_controller);
 
   @override
@@ -166,7 +185,7 @@ class _WorksCardState extends State<WorksCard> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return SlideTransition(
-      position: _animation,
+      position: widget.animateVertical==null?_verticalAnimation : _horizontalAnimation,
       child: Card(
         elevation: 30,
         shape: RoundedRectangleBorder(
@@ -180,8 +199,8 @@ class _WorksCardState extends State<WorksCard> with SingleTickerProviderStateMix
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset(
-                widget.image,height: 200.0, 
-                width: 200.0, 
+                widget.image,height: widget.height==null?200.0 : widget.height, 
+                width: widget.width==null? 200.0 : widget.width, 
                 fit: widget.fit == null? null : widget.fit,
               ),
               SizedBox(height: 10.0),
@@ -195,15 +214,15 @@ class _WorksCardState extends State<WorksCard> with SingleTickerProviderStateMix
 }
 
 class TextForm extends StatelessWidget {
-  final heading;
-  final width;
+  final text;
+  final containerWidth;
   final hintText;
   final maxLines;
 
   const TextForm({
     super.key, 
-    required this.heading, 
-    required this.width, 
+    required this.text, 
+    required this.containerWidth, 
     required this.hintText, 
     this.maxLines
   });
@@ -213,10 +232,10 @@ class TextForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Sans(text: heading, size: 16.0,),
+        Sans(text: text, size: 16.0,),
         SizedBox(height: 5),
         SizedBox(
-        width: width,
+        width: containerWidth,
         child: TextFormField(
           // inputFormatters: [
           //   LengthLimitingTextInputFormatter(10),

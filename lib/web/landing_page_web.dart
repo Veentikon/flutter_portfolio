@@ -68,15 +68,15 @@ class _LandingPageWebState extends State<LandingPageWeb> {
         title: Row(
           children: [
             Spacer(flex: 3),
-            TabsWeb(title: "Home"),
+            TabsWeb(title: "Home", route: '/'),
             Spacer(),
-            TabsWeb(title: "Works"),
+            TabsWeb(title: "Works", route: '/works'),
             Spacer(),
-            TabsWeb(title: "Blog"),
+            TabsWeb(title: "Blog", route: '/blog'),
             Spacer(),
-            TabsWeb(title: "About"),
+            TabsWeb(title: "About", route: '/about'),
             Spacer(),
-            TabsWeb(title: "Contacts"),
+            TabsWeb(title: "Contacts", route: '/contacts'),
             Spacer(),
           ],
         ),
@@ -158,14 +158,14 @@ class _LandingPageWebState extends State<LandingPageWeb> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset("web.jpg",height: widthDevice/1.9),
+                Image.asset("web.jpg",height: widthDevice/2.3),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SansBold(text: "About me", size: 40.0),
                     SizedBox(height: 15),
-                    Sans(text: "Hello I'm Vitalii Radzividlo, I am full stack web developer, and cybersecurity specialist", size: 15),
+                    Sans(text: "Hello I'm Vitalii Radzividlo, I am full stack web developer", size: 15),
                     Sans(text: "I strive to ensure astounding performance with state of ", size: 15),
                     Sans(text: "the art security for Android, Ios, Web, Mac, Linux and Windows", size: 15),
                     SizedBox(height: 10),
@@ -196,9 +196,9 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    WorksCard(image: "assets/webL.png", description: "Web development",fit:BoxFit.contain,reverse:true),
-                    WorksCard(image: "assets/app.png", description: "App development"),
-                    WorksCard(image: "assets/firebase.png", description: "Back-end development",fit:BoxFit.contain,reverse:true),
+                    AnimatedCard(image: "assets/webL.png", description: "Web development",fit:BoxFit.contain,reverse:true,),
+                    AnimatedCard(image: "assets/app.png", description: "App development",fit:BoxFit.contain,),
+                    AnimatedCard(image: "assets/firebase.png", description: "Back-end development",fit:BoxFit.contain,reverse:true,),
                     // WorksCard()
                   ],
                 ),
@@ -218,14 +218,14 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                     Column(
                       children: [
                         TextForm(
-                          heading: "First name", 
-                          width: 350, 
+                          text: "First name", 
+                          containerWidth: 350, 
                           hintText: "Please type your first name",
                         ),
                         SizedBox(height: 15),
                         TextForm(
-                          heading: "Email", 
-                          width: 350, 
+                          text: "Email", 
+                          containerWidth: 350, 
                           hintText: "Please type your email",
                         ),
                       ],
@@ -233,21 +233,21 @@ class _LandingPageWebState extends State<LandingPageWeb> {
                     Column(
                       children: [
                         TextForm(
-                          heading: "Last name", 
-                          width: 350, 
+                          text: "Last name", 
+                          containerWidth: 350, 
                           hintText: "Please type your last name",
                         ),
                         SizedBox(height: 15),
                         TextForm(
-                          heading: "Phone number", 
-                          width: 350, 
+                          text: "Phone number", 
+                          containerWidth: 350, 
                           hintText: "Please type your phone number",
                         ),
                       ],
                     ),
                   ],
                 ),
-                TextForm(heading: "Message", width: widthDevice/1.5, hintText: "Please enter your message", maxLines: 10,),
+                TextForm(text: "Message", containerWidth: widthDevice/1.5, hintText: "Please enter your message", maxLines: 10,),
                 MaterialButton(
                   elevation: 20.0,
                   shape: RoundedRectangleBorder(
