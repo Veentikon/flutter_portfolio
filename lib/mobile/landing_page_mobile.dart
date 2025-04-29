@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/components.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,6 +12,7 @@ class LandingPageMobile extends StatefulWidget {
 }
 
 class _LandingPageMobileState extends State<LandingPageMobile> {
+
   @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
@@ -50,31 +51,33 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
             SizedBox(height: 20.0),
             TabsMobile(text: "Contact", route: "/contact"),
             SizedBox(height: 40.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  onPressed: () async => await launchUrl(Uri.parse('https://www.instagram.com/tomcruise'),), 
-                icon: SvgPicture.asset(
-                  "assets/instagram.svg",
-                  color: Colors.black,
-                  width: 35.0,
-                ),),
-                IconButton(
-                  onPressed: () async => await launchUrl(Uri.parse('https://www.twitter.com/tomcruise'),), 
-                icon: SvgPicture.asset(
-                  "assets/xlogo.svg",
-                  color: Colors.black,
-                  width: 35.0,
-                ),),
-                IconButton(
-                  onPressed: () async => await launchUrl(Uri.parse('https://www.github.com/Veentikon'),), 
-                icon: SvgPicture.asset(
-                  "assets/github.svg",
-                  color: Colors.black,
-                  width: 35.0,
-                ),),
-              ],
+            RepaintBoundary(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    onPressed: () async => await launchUrl(Uri.parse('https://www.instagram.com/tomcruise'),), 
+                  icon: SvgPicture.asset(
+                    "assets/instagram.svg",
+                    color: Colors.black,
+                    width: 35.0,
+                  ),),
+                  IconButton(
+                    onPressed: () async => await launchUrl(Uri.parse('https://www.twitter.com/tomcruise'),), 
+                  icon: SvgPicture.asset(
+                    "assets/xlogo.svg",
+                    color: Colors.black,
+                    width: 35.0,
+                  ),),
+                  IconButton(
+                    onPressed: () async => await launchUrl(Uri.parse('https://www.github.com/Veentikon'),), 
+                  icon: SvgPicture.asset(
+                    "assets/github.svg",
+                    color: Colors.black,
+                    width: 35.0,
+                  ),),
+                ],
+              ),
             )
           ],
         )
@@ -82,20 +85,22 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
       body: ListView(
         children: [
           // Intro, First section
+          CircleAvatar(
+            radius: 117.0,
+            backgroundColor: Colors.tealAccent,
+            child: CircleAvatar(
+              radius: 110.0,
+              backgroundColor: Colors.white,
+              backgroundImage: AssetImage("assets/image.png"),
+            ),
+          ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0),
+            // padding: const EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 117.0,
-                  backgroundColor: Colors.tealAccent,
-                  child: CircleAvatar(
-                    radius: 110.0,
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage("assets/image.png"),
-                  ),
-                ),
+                
                 SizedBox(height: 25.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +123,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
                 ),
                 SizedBox(height: 15.0),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Wrap(
                       direction: Axis.vertical,
@@ -146,9 +151,11 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
           ),
           SizedBox(height: 90.0),
           // About me, Second section
-          Padding(padding: EdgeInsets.only(left: 20.0),
+          Padding(
+            // padding: EdgeInsets.only(left: 20.0),
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SansBold(text: "About me", size: 35.0),

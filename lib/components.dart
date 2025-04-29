@@ -149,7 +149,7 @@ class AnimatedCard extends StatefulWidget {
     {
       super.key,
       required this.image,
-      required this.description,
+      this.description,
       this.fit,
       this.reverse,
       this.height,
@@ -204,7 +204,8 @@ class _AnimatedCardState extends State<AnimatedCard> with SingleTickerProviderSt
                 fit: widget.fit == null? null : widget.fit,
               ),
               SizedBox(height: 10.0),
-              SansBold(text: widget.description, size: 15.0),
+              widget.description==null?SizedBox():SansBold(text: widget.description, size: 15.0),
+              // SansBold(text: widget.description, size: 15.0),
             ],
           ),
         ),
@@ -269,5 +270,22 @@ class TextForm extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class AbelCustom extends StatelessWidget {
+  final text;
+  final size;
+  final color;
+  final fontWeight;
+  const AbelCustom({super.key, required this.text, required this.size, this.color, this.fontWeight});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, style: GoogleFonts.abel(
+      fontSize: size,
+      color: color==null? Colors.black : color,
+      fontWeight: fontWeight==null? FontWeight.normal : fontWeight,
+    ));
   }
 }
